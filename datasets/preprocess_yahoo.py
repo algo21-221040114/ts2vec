@@ -51,7 +51,7 @@ if __name__ == '__main__':
             'value': df['value'].tolist(),
             'label': df['anomaly'].tolist()
         })
-    assert len(dataset) == 367, 'Incomplete dataset'
+    assert len(dataset) == 367, 'Incomplete dataset' # if False --> error
     
     all_train_data = {}
     all_train_labels = {}
@@ -69,7 +69,7 @@ if __name__ == '__main__':
         l = len(data) // 2
 
         n = 0
-        while adfuller(data[:l], 1)[1] > 0.05 or adfuller(data[:l])[1] > 0.05:
+        while adfuller(data[:l], 1)[1] > 0.05 or adfuller(data[:l])[1] > 0.05: # stationary test ？？？
             data = np.diff(data)
             labels = labels[1:]
             timestamps = timestamps[1:]
@@ -87,7 +87,7 @@ if __name__ == '__main__':
         all_train_data[k] = (all_train_data[k] - mean) / std
         all_test_data[k] = (all_test_data[k] - mean) / std
 
-    with open(args.output, 'wb') as f:
+    with open(args.output, 'wb') as f:   # save data into f
         pickle.dump({
             'all_train_data': all_train_data,
             'all_train_labels': all_train_labels,
